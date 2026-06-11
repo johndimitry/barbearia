@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Barbearia - Serviços e Preços</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+/* ================================================= */
+/* RESET */
+/* ================================================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:"Poppins",sans-serif;
+
+background:#000;
+
+color:white;
+
+overflow-x:hidden;
+
+position:relative;
+
+padding:40px;
+}
+
+/* ================================================= */
+/* BACKGROUND */
+/* ================================================= */
+
+body::before{
+
+content:"";
+
+position:fixed;
+inset:0;
+
+background:
+
+linear-gradient(
+rgba(0,0,0,.88),
+rgba(0,0,0,.95)
+),
+
+url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=1974&auto=format&fit=crop");
+
+background-size:cover;
+background-position:center;
+
+z-index:-2;
+}
+
+/* ================================================= */
+/* CONTAINER */
+/* ================================================= */
+
+.container{
+
+width:100%;
+max-width:1500px;
+
+margin:auto;
+}
+
+/* ================================================= */
+/* HEADER */
+/* ================================================= */
+
+.header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+gap:30px;
+
+margin-bottom:40px;
+
+padding:30px;
+
+border-radius:35px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(212,175,55,.15);
+
+backdrop-filter:blur(15px);
+}
+
+.logoSide{
+
+display:flex;
+align-items:center;
+
+gap:25px;
+}
+
+.logoCircle{
+
+width:170px;
+height:170px;
+
+border-radius:50%;
+
+border:4px solid #d4af37;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:80px;
+
+color:#d4af37;
+
+animation:girar 10s linear infinite;
+}
+
+@keyframes girar{
+
+0%{
+transform:rotate(0deg);
+}
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+.titleArea h1{
+
+font-size:85px;
+
+font-weight:700;
+
+line-height:1;
+}
+
+.titleArea h2{
+
+font-size:45px;
+
+margin-top:10px;
+
+color:#d4af37;
+
+letter-spacing:3px;
+}
+
+.titleArea p{
+
+margin-top:15px;
+
+font-size:22px;
+
+color:#bbb;
+}
+
+.chair{
+
+font-size:180px;
+
+color:#d4af37;
+}
+
+/* ================================================= */
+/* TABLE */
+/* ================================================= */
+
+.tableBox{
+
+overflow:hidden;
+
+border-radius:35px;
+
+border:2px solid rgba(212,175,55,.3);
+
+background:rgba(255,255,255,.03);
+
+backdrop-filter:blur(10px);
+
+margin-bottom:40px;
+}
+
+.tableHeader{
+
+display:grid;
+
+grid-template-columns:
+2fr 1fr;
+
+padding:25px 35px;
+
+background:#d4af37;
+
+color:black;
+
+font-weight:700;
+
+font-size:35px;
+}
+
+.service{
+
+display:grid;
+
+grid-template-columns:
+120px 2fr 1fr;
+
+align-items:center;
+
+padding:25px 35px;
+
+border-top:1px solid rgba(212,175,55,.2);
+
+transition:.3s;
+}
+
+.service:hover{
+
+background:rgba(212,175,55,.06);
+}
+
+.serviceIcon{
+
+font-size:45px;
+
+color:#d4af37;
+}
+
+.serviceInfo h3{
+
+font-size:35px;
+
+margin-bottom:8px;
+}
+
+.serviceInfo p{
+
+font-size:22px;
+
+color:#bbb;
+}
+
+.price{
+
+font-size:45px;
+
+font-weight:700;
+
+color:#fff;
+
+text-align:right;
+}
+
+/* ================================================= */
+/* COMBOS */
+/* ================================================= */
+
+.sectionTitle{
+
+font-size:45px;
+
+margin-bottom:25px;
+
+color:#d4af37;
+}
+
+.comboGrid{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:25px;
+
+margin-bottom:40px;
+}
+
+.comboCard{
+
+padding:35px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(212,175,55,.15);
+
+display:flex;
+align-items:center;
+
+gap:25px;
+
+transition:.3s;
+}
+
+.comboCard:hover{
+
+transform:translateY(-5px);
+
+border:1px solid rgba(212,175,55,.4);
+}
+
+.comboCard i{
+
+font-size:55px;
+
+color:#d4af37;
+}
+
+.comboInfo h3{
+
+font-size:28px;
+
+margin-bottom:10px;
+}
+
+.comboInfo p{
+
+font-size:42px;
+
+font-weight:700;
+
+color:#d4af37;
+}
+
+/* ================================================= */
+/* INFO */
+/* ================================================= */
+
+.infoGrid{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:25px;
+
+margin-bottom:50px;
+}
+
+.infoCard{
+
+padding:35px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(212,175,55,.15);
+
+display:flex;
+align-items:center;
+
+gap:20px;
+}
+
+.infoCard i{
+
+font-size:50px;
+
+color:#d4af37;
+}
+
+.infoCard h3{
+
+font-size:26px;
+
+margin-bottom:10px;
+}
+
+.infoCard p{
+
+font-size:18px;
+
+color:#bbb;
+
+line-height:1.6;
+}
+
+/* ================================================= */
+/* FOOTER */
+/* ================================================= */
+
+.footer{
+
+text-align:center;
+
+padding:30px;
+
+font-size:45px;
+
+font-style:italic;
+
+color:#d4af37;
+}
+
+/* ================================================= */
+/* RESPONSIVO */
+/* ================================================= */
+
+@media(max-width:1200px){
+
+.header{
+
+flex-direction:column;
+text-align:center;
+}
+
+.logoSide{
+
+flex-direction:column;
+}
+
+.comboGrid,
+.infoGrid{
+
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:900px){
+
+body{
+
+padding:20px;
+}
+
+.titleArea h1{
+
+font-size:55px;
+}
+
+.titleArea h2{
+
+font-size:30px;
+}
+
+.service{
+
+grid-template-columns:1fr;
+gap:15px;
+text-align:center;
+}
+
+.price{
+
+text-align:center;
+}
+
+.tableHeader{
+
+grid-template-columns:1fr;
+text-align:center;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================================================= -->
+<!-- HEADER -->
+<!-- ================================================= -->
+
+<div class="header">
+
+<div class="logoSide">
+
+<div class="logoCircle">
+
+<i class="fa-solid fa-scissors"></i>
+
+</div>
+
+<div class="titleArea">
+
+<h1>BARBEARIA</h1>
+
+<h2>SERVIÇOS E PREÇOS</h2>
+
+<p>Seu estilo, nossa arte.</p>
+
+</div>
+
+</div>
+
+<div class="chair">
+
+<i class="fa-solid fa-chair"></i>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- TABELA -->
+<!-- ================================================= -->
+
+<div class="tableBox">
+
+<div class="tableHeader">
+
+<div>LISTA DE CORTES E SERVIÇOS</div>
+
+<div style="text-align:right;">
+PREÇO
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-scissors"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>CORTE TRADICIONAL</h3>
+
+<p>Corte clássico na tesoura e máquina</p>
+
+</div>
+
+<div class="price">
+R$ 35,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-clippers"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>DEGRADÊ (FADE)</h3>
+
+<p>Fade baixo, médio ou alto</p>
+
+</div>
+
+<div class="price">
+R$ 45,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-user"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>CORTE SOCIAL</h3>
+
+<p>Estilo social moderno</p>
+
+</div>
+
+<div class="price">
+R$ 40,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-razor"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>CORTE NAVALHADO</h3>
+
+<p>Acabamento detalhado na navalha</p>
+
+</div>
+
+<div class="price">
+R$ 50,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-child"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>CORTE INFANTIL</h3>
+
+<p>Crianças até 12 anos</p>
+
+</div>
+
+<div class="price">
+R$ 30,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-user-tie"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>CORTE + BARBA</h3>
+
+<p>Combo completo</p>
+
+</div>
+
+<div class="price">
+R$ 65,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-user-ninja"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>BARBA TRADICIONAL</h3>
+
+<p>Aparar, desenhar e finalizar</p>
+
+</div>
+
+<div class="price">
+R$ 30,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-soap"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>BARBA PREMIUM</h3>
+
+<p>Toalha quente + hidratação</p>
+
+</div>
+
+<div class="price">
+R$ 45,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-eye"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>SOBRANCELHA</h3>
+
+<p>Design simples</p>
+
+</div>
+
+<div class="price">
+R$ 15,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-spray-can"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>PIGMENTAÇÃO</h3>
+
+<p>Disfarce de falhas</p>
+
+</div>
+
+<div class="price">
+R$ 25,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-droplet"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>HIDRATAÇÃO CAPILAR</h3>
+
+<p>Tratamento e cuidado</p>
+
+</div>
+
+<div class="price">
+R$ 35,00
+</div>
+
+</div>
+
+<!-- ITEM -->
+
+<div class="service">
+
+<div class="serviceIcon">
+<i class="fa-solid fa-star"></i>
+</div>
+
+<div class="serviceInfo">
+
+<h3>LUZES / PLATINADO</h3>
+
+<p>Consulta de valor</p>
+
+</div>
+
+<div class="price">
+R$ 120,00
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- COMBOS -->
+<!-- ================================================= -->
+
+<h2 class="sectionTitle">
+COMBOS PROMOCIONAIS
+</h2>
+
+<div class="comboGrid">
+
+<div class="comboCard">
+
+<i class="fa-solid fa-scissors"></i>
+
+<div class="comboInfo">
+
+<h3>CORTE + BARBA + SOBRANCELHA</h3>
+
+<p>R$ 75,00</p>
+
+</div>
+
+</div>
+
+<div class="comboCard">
+
+<i class="fa-solid fa-droplet"></i>
+
+<div class="comboInfo">
+
+<h3>CORTE PREMIUM + HIDRATAÇÃO</h3>
+
+<p>R$ 80,00</p>
+
+</div>
+
+</div>
+
+<div class="comboCard">
+
+<i class="fa-solid fa-calendar"></i>
+
+<div class="comboInfo">
+
+<h3>PLANO MENSAL (4 CORTES)</h3>
+
+<p>R$ 120,00</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- INFORMAÇÕES -->
+<!-- ================================================= -->
+
+<h2 class="sectionTitle">
+INFORMAÇÕES EXTRAS
+</h2>
+
+<div class="infoGrid">
+
+<div class="infoCard">
+
+<i class="fa-solid fa-clock"></i>
+
+<div>
+
+<h3>HORÁRIO MARCADO</h3>
+
+<p>Atendimento organizado e rápido</p>
+
+</div>
+
+</div>
+
+<div class="infoCard">
+
+<i class="fa-solid fa-credit-card"></i>
+
+<div>
+
+<h3>PAGAMENTO</h3>
+
+<p>PIX, cartão e dinheiro</p>
+
+</div>
+
+</div>
+
+<div class="infoCard">
+
+<i class="fa-solid fa-award"></i>
+
+<div>
+
+<h3>FIDELIDADE</h3>
+
+<p>A cada 10 cortes, ganhe 1 grátis</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================================================= -->
+<!-- FOOTER -->
+<!-- ================================================= -->
+
+<div class="footer">
+
+Seu estilo, nossa arte.
+
+</div>
+
+</div>
+
+</body>
+
+</html>
