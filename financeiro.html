@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Financeiro - Barbearia Premium</title>
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+
+<style>
+
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+
+body{
+
+font-family:"Poppins",sans-serif;
+
+background:#000;
+
+color:white;
+
+padding:40px;
+
+}
+
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+
+linear-gradient(
+rgba(0,0,0,.85),
+rgba(0,0,0,.95)
+),
+
+url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=1974&auto=format&fit=crop");
+
+background-size:cover;
+
+z-index:-1;
+
+}
+
+
+
+.container{
+
+max-width:1400px;
+
+margin:auto;
+
+}
+
+
+
+.topo{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:40px;
+
+}
+
+
+
+.topo h1{
+
+font-size:55px;
+
+}
+
+
+
+.gold{
+
+color:#d4af37;
+
+}
+
+
+
+.btn{
+
+background:#d4af37;
+
+color:#000;
+
+border:none;
+
+padding:15px 30px;
+
+border-radius:20px;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:25px;
+
+}
+
+
+
+.card{
+
+padding:35px;
+
+border-radius:30px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(212,175,55,.2);
+
+}
+
+
+
+.card i{
+
+font-size:45px;
+
+color:#d4af37;
+
+margin-bottom:20px;
+
+}
+
+
+
+.card h2{
+
+font-size:35px;
+
+}
+
+
+
+.card p{
+
+margin-top:10px;
+
+font-size:22px;
+
+color:#aaa;
+
+}
+
+
+
+.secao{
+
+margin-top:50px;
+
+}
+
+
+
+.secao h2{
+
+font-size:40px;
+
+margin-bottom:25px;
+
+color:#d4af37;
+
+}
+
+
+
+.lista{
+
+background:rgba(255,255,255,.05);
+
+border-radius:30px;
+
+padding:30px;
+
+}
+
+
+
+.item{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:20px;
+
+border-bottom:1px solid rgba(255,255,255,.1);
+
+font-size:20px;
+
+}
+
+
+
+.item:last-child{
+
+border:none;
+
+}
+
+
+
+.valor{
+
+color:#00ff88;
+
+font-weight:bold;
+
+}
+
+
+
+@media(max-width:1000px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="topo">
+
+
+<h1>
+
+Financeiro <span class="gold">Premium</span>
+
+</h1>
+
+
+<button class="btn"
+onclick="voltar()">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Voltar
+
+</button>
+
+
+</div>
+
+
+
+
+<div class="grid">
+
+
+<div class="card">
+
+<i class="fa-solid fa-calendar-check"></i>
+
+<h2 id="totalCortes">
+
+0
+
+</h2>
+
+<p>
+
+Atendimentos
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<i class="fa-solid fa-money-bill">
+
+</i>
+
+<h2 id="faturamento">
+
+R$0
+
+</h2>
+
+<p>
+
+Faturamento
+
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<i class="fa-solid fa-arrow-trend-up"></i>
+
+<h2 id="lucro">
+
+R$0
+
+</h2>
+
+<p>
+
+Lucro
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<i class="fa-solid fa-wallet"></i>
+
+<h2 id="despesas">
+
+R$0
+
+</h2>
+
+<p>
+
+Despesas
+
+</p>
+
+</div>
+
+
+</div>
+
+
+
+<div class="secao">
+
+
+<h2>
+
+Últimos atendimentos
+
+</h2>
+
+
+<div class="lista" id="lista">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+
+function carregarFinanceiro(){
+
+
+const agendamentos =
+
+JSON.parse(
+localStorage.getItem("agendamentos")
+) || [];
+
+
+
+let faturamento = 0;
+
+
+
+agendamentos.forEach(item=>{
+
+
+if(item.servico.includes("Barba")){
+
+faturamento += 65;
+
+}
+
+else{
+
+faturamento += 40;
+
+}
+
+
+});
+
+
+
+let despesas = 500;
+
+
+let lucro = faturamento - despesas;
+
+
+
+document.getElementById("totalCortes").innerHTML =
+
+agendamentos.length;
+
+
+
+document.getElementById("faturamento").innerHTML =
+
+"R$ " + faturamento;
+
+
+
+document.getElementById("despesas").innerHTML =
+
+"R$ " + despesas;
+
+
+
+document.getElementById("lucro").innerHTML =
+
+"R$ " + lucro;
+
+
+
+
+const lista = document.getElementById("lista");
+
+
+if(agendamentos.length===0){
+
+
+lista.innerHTML=
+
+"Sem atendimentos registrados";
+
+
+return;
+
+}
+
+
+
+lista.innerHTML="";
+
+
+agendamentos.forEach(item=>{
+
+
+lista.innerHTML +=
+
+`
+
+<div class="item">
+
+
+<div>
+
+${item.nome}
+
+<br>
+
+${item.servico}
+
+</div>
+
+
+<div class="valor">
+
+R$40
+
+</div>
+
+
+</div>
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+function voltar(){
+
+window.location.href="barbeiro.html";
+
+}
+
+
+
+carregarFinanceiro();
+
+
+</script>
+
+
+
+</body>
+
+</html>

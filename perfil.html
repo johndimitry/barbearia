@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Perfil do Barbeiro</title>
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+
+<style>
+
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
+
+body{
+
+font-family:"Poppins",sans-serif;
+
+background:#000;
+
+color:white;
+
+padding:40px;
+
+}
+
+
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+
+linear-gradient(
+rgba(0,0,0,.85),
+rgba(0,0,0,.95)
+),
+
+url("https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=1974&auto=format&fit=crop");
+
+background-size:cover;
+
+z-index:-1;
+
+}
+
+
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+
+
+.topo{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:40px;
+
+}
+
+
+
+.topo h1{
+
+font-size:55px;
+
+}
+
+
+
+.gold{
+
+color:#d4af37;
+
+}
+
+
+
+.btn{
+
+background:#d4af37;
+
+border:none;
+
+padding:15px 30px;
+
+border-radius:20px;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+.perfil{
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(212,175,55,.2);
+
+border-radius:40px;
+
+padding:40px;
+
+text-align:center;
+
+}
+
+
+
+.avatar{
+
+width:180px;
+
+height:180px;
+
+border-radius:50%;
+
+margin:auto;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:#d4af37;
+
+color:#000;
+
+font-size:80px;
+
+}
+
+
+
+.perfil h2{
+
+font-size:45px;
+
+margin-top:25px;
+
+}
+
+
+
+.perfil span{
+
+color:#d4af37;
+
+}
+
+
+
+.descricao{
+
+color:#aaa;
+
+font-size:20px;
+
+margin-top:15px;
+
+}
+
+
+
+.cards{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(3,1fr);
+
+gap:25px;
+
+margin-top:40px;
+
+}
+
+
+
+.card{
+
+background:rgba(255,255,255,.05);
+
+padding:30px;
+
+border-radius:30px;
+
+border:1px solid rgba(212,175,55,.2);
+
+text-align:center;
+
+}
+
+
+
+.card i{
+
+font-size:45px;
+
+color:#d4af37;
+
+margin-bottom:20px;
+
+}
+
+
+
+.card h3{
+
+font-size:30px;
+
+}
+
+
+
+.card p{
+
+margin-top:10px;
+
+color:#aaa;
+
+}
+
+
+
+.editar{
+
+margin-top:40px;
+
+}
+
+
+
+.editar button{
+
+background:#d4af37;
+
+border:none;
+
+padding:18px 50px;
+
+border-radius:20px;
+
+font-size:20px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+@media(max-width:900px){
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="topo">
+
+
+<h1>
+
+Perfil <span class="gold">Barbeiro</span>
+
+</h1>
+
+
+<button class="btn"
+onclick="voltar()">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Voltar
+
+</button>
+
+
+</div>
+
+
+
+
+<div class="perfil">
+
+
+<div class="avatar">
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+
+<h2>
+
+Lucas <span>Barber</span>
+
+</h2>
+
+
+<div class="descricao">
+
+Especialista em Fade, Barba Premium e Cortes Modernos
+
+</div>
+
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<i class="fa-solid fa-users"></i>
+
+<h3 id="clientes">
+
+0
+
+</h3>
+
+<p>
+
+Clientes atendidos
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<i class="fa-solid fa-star"></i>
+
+<h3>
+
+4.9
+
+</h3>
+
+<p>
+
+Avaliação
+
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<i class="fa-solid fa-clock"></i>
+
+<h3>
+
+08:00 - 19:00
+
+</h3>
+
+<p>
+
+Horário
+
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+<div class="editar">
+
+<button onclick="editarPerfil()">
+
+<i class="fa-solid fa-pen"></i>
+
+Editar perfil
+
+</button>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+
+function carregarClientes(){
+
+
+const dados =
+
+JSON.parse(
+localStorage.getItem("agendamentos")
+) || [];
+
+
+
+document.getElementById("clientes").innerHTML=
+
+dados.length;
+
+
+
+}
+
+
+
+function editarPerfil(){
+
+alert("Área de edição em desenvolvimento");
+
+}
+
+
+
+function voltar(){
+
+window.location.href="barbeiro.html";
+
+}
+
+
+
+carregarClientes();
+
+
+
+</script>
+
+
+</body>
+
+</html>

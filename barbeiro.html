@@ -980,6 +980,14 @@ Ver tudo
 </div>
 
 <div class="quickGrid">
+    <div class="quickCard"
+onclick="abrirEstoque()">
+
+<i class="fa-solid fa-box"></i>
+
+<h3>Estoque</h3>
+
+</div>
 
 <div class="quickCard"
 onclick="agendarHorario()">
@@ -990,6 +998,7 @@ onclick="agendarHorario()">
 
 </div>
 
+
 <div class="quickCard"
 onclick="meusHorarios()">
 
@@ -998,7 +1007,22 @@ onclick="meusHorarios()">
 <h3>Horários</h3>
 
 </div>
+<div class="quickCard"
+onclick="abrirClientes()">
 
+<i class="fa-solid fa-users"></i>
+
+<h3>Clientes</h3>
+
+</div>
+<div class="quickCard"
+onclick="abrirFinanceiro()">
+
+<i class="fa-solid fa-chart-line"></i>
+
+<h3>Financeiro</h3>
+
+</div>
 <div class="quickCard"
 onclick="abrirServicos()">
 
@@ -1044,19 +1068,21 @@ onclick="abrirAgendamento()">
 
 </div>
 
-<div class="appointmentInfo">
+<div
+class="appointmentInfo"
+id="proximoHorario">
 
-<h3>Corte Masculino</h3>
+<h3>
 
-<p>🕘 09:00</p>
+Nenhum horário marcado
 
-<p>📍 Unidade Centro</p>
+</h3>
 
-<div class="status">
+<p>
 
-Confirmado
+Clique em Agendar
 
-</div>
+</p>
 
 </div>
 
@@ -1081,6 +1107,7 @@ Início
 
 <div class="navItem"
 onclick="paginaAgenda()">
+
 
 <i class="fa-regular fa-calendar"></i>
 
@@ -1162,23 +1189,41 @@ function abrirAgendamento(){
 
 showToast("📅 Abrindo agendamento");
 
+setTimeout(()=>{
+
+window.location.href="agendamento.html";
+
+},800);
+
 }
 
 function agendarHorario(){
 
-showToast("🗓️ Escolha um horário");
+showToast("📅 Abrindo agenda");
+
+setTimeout(()=>{
+
+window.location.href="agendamento.html";
+
+},800);
 
 }
 
 function meusHorarios(){
 
-showToast("👤 Seus horários");
+showToast("📋 Abrindo seus horários");
+
+setTimeout(()=>{
+
+window.location.href="meus-agendamentos.html";
+
+},800);
 
 }
 
 function abrirServicos(){
 
-showToast("✂️ Serviços disponíveis");
+window.location.href="servicos.html";
 
 }
 
@@ -1208,19 +1253,20 @@ showToast("🏠 Página inicial");
 
 function paginaAgenda(){
 
-showToast("📅 Abrindo agenda");
+window.location.href="agenda.html";
 
 }
 
+
 function paginaAgendamentos(){
 
-showToast("📋 Seus agendamentos");
+window.location.href="meus-agendamentos.html";
 
 }
 
 function paginaPerfil(){
 
-showToast("👤 Perfil aberto");
+window.location.href="perfil.html";
 
 }
 
@@ -1239,7 +1285,94 @@ window.location.href = "cortes.html";
 },1000);
 
 }
+/* ======================================= */
+/* MOSTRAR PRÓXIMO AGENDAMENTO */
+/* ======================================= */
 
+function carregarProximoHorario(){
+
+const lista =
+JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+const box =
+document.getElementById("proximoHorario");
+
+if(lista.length===0){
+
+box.innerHTML=`
+
+<h3>
+
+Nenhum horário marcado
+
+</h3>
+
+<p>
+
+Agende seu primeiro horário.
+
+</p>
+
+`;
+
+return;
+
+}
+
+const horario = lista[0];
+
+box.innerHTML=`
+
+<h3>
+
+${horario.servico}
+
+</h3>
+
+<p>
+
+👨 ${horario.barbeiro}
+
+</p>
+
+<p>
+
+📅 ${horario.data}
+
+</p>
+
+<p>
+
+🕘 ${horario.horario}
+
+</p>
+
+<div class="status">
+
+${horario.status}
+
+</div>
+
+`;
+
+}
+
+carregarProximoHorario();
+function abrirClientes(){
+
+window.location.href="clientes.html";
+
+} 
+function abrirFinanceiro(){
+
+window.location.href="financeiro.html";
+
+}
+function abrirEstoque(){
+
+window.location.href="estoque.html";
+
+}
 </script>
 
 </body>
