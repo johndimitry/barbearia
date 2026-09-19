@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia Premium</title>
+<style>
+:root{
+  --bg:#080808;
+  --panel:#111;
+  --panel2:#171717;
+  --gold:#d4af37;
+  --gold2:#f3d477;
+  --text:#f5f5f5;
+  --muted:#aaa;
+  --danger:#d9534f;
+  --success:#35b56b;
+  --border:#2b2b2b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#050505,#151515);
+  color:var(--text);
+  min-height:100vh;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:var(--gold2);text-decoration:none}
+.hidden{display:none!important}
+.container{width:min(1180px,92%);margin:auto}
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(5,5,5,.96);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+}
+.nav{
+  min-height:74px;display:flex;align-items:center;
+  justify-content:space-between;gap:20px;
+}
+.logo{font-size:23px;font-weight:800;letter-spacing:1px}
+.logo span{color:var(--gold)}
+.nav-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  border:1px solid var(--gold);
+  background:var(--gold);color:#111;
+  padding:11px 17px;border-radius:8px;
+  font-weight:700;transition:.2s;
+}
+.btn:hover{background:var(--gold2);transform:translateY(-1px)}
+.btn.outline{background:transparent;color:var(--gold2)}
+.btn.dark{background:#222;border-color:#444;color:white}
+.btn.danger{background:var(--danger);border-color:var(--danger);color:white}
+.btn.success{background:var(--success);border-color:var(--success);color:white}
+.btn.small{padding:8px 11px;font-size:13px}
+main{padding:30px 0 60px}
+.hero{
+  display:grid;grid-template-columns:1.15fr .85fr;
+  gap:30px;align-items:center;padding:55px 0;
+}
+.hero h1{font-size:clamp(35px,5vw,65px);line-height:1.05;margin-bottom:20px}
+.hero h1 span{color:var(--gold)}
+.hero p{color:var(--muted);font-size:18px;line-height:1.7;margin-bottom:25px}
+.hero-card{
+  min-height:350px;border:1px solid #4a3b15;border-radius:18px;
+  background:radial-gradient(circle at top right,#594615,#16120a 45%,#101010);
+  display:flex;align-items:center;justify-content:center;
+  padding:35px;text-align:center;
+}
+.hero-card .symbol{font-size:100px;color:var(--gold);margin-bottom:15px}
+.section{margin:35px 0}
+.section-title{font-size:30px;margin-bottom:20px}
+.section-title span{color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{
+  background:linear-gradient(145deg,#151515,#0e0e0e);
+  border:1px solid var(--border);border-radius:14px;padding:20px;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+}
+.card h3{margin-bottom:10px;color:var(--gold2)}
+.card p{color:var(--muted);line-height:1.6}
+.price{font-size:24px;font-weight:800;color:var(--gold2);margin:15px 0}
+.badge{
+  display:inline-block;padding:5px 9px;border-radius:20px;
+  background:#29220d;color:var(--gold2);font-size:12px;
+}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+label{font-size:14px;color:#ddd}
+input,select,textarea{
+  width:100%;background:#090909;color:white;
+  border:1px solid #393939;border-radius:8px;
+  padding:12px;outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:110px;resize:vertical}
+.panel{background:#101010;border:1px solid var(--border);border-radius:15px;padding:24px}
+.page-head{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:15px;flex-wrap:wrap;margin-bottom:25px;
+}
+.page-head h2{font-size:30px}
+.page-head p{color:var(--muted);margin-top:6px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tab{
+  background:#191919;border:1px solid #333;color:#ddd;
+  padding:10px 14px;border-radius:8px;
+}
+.tab.active{background:var(--gold);color:#111;border-color:var(--gold)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.stat strong{font-size:30px;color:var(--gold2);display:block;margin-top:8px}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{
+  border:1px solid #303030;border-radius:10px;padding:15px;
+  background:#151515;display:flex;justify-content:space-between;
+  gap:15px;align-items:center;flex-wrap:wrap;
+}
+.item-main{flex:1;min-width:220px}
+.item-main strong{display:block;margin-bottom:5px}
+.item-main span{color:var(--muted);font-size:14px;line-height:1.7}
+.item-actions{display:flex;gap:8px;flex-wrap:wrap}
+.status{font-size:12px;padding:5px 8px;border-radius:15px}
+.status.agendado{background:#29220d;color:var(--gold2)}
+.status.concluido{background:#123b25;color:#75e7a5}
+.status.cancelado{background:#421b1b;color:#ff9d9d}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.profile{
+  display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+}
+.avatar{
+  width:105px;height:105px;border-radius:50%;
+  border:2px solid var(--gold);object-fit:cover;
+  background:#222;display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:40px;font-weight:bold;
+}
+.profile-info h3{font-size:27px;color:var(--gold2);margin-bottom:8px}
+.profile-info p{color:var(--muted);line-height:1.6}
+.notice{
+  padding:13px 15px;border-radius:8px;background:#29220d;
+  color:var(--gold2);border:1px solid #5c4818;margin-bottom:18px;
+}
+footer{border-top:1px solid var(--border);padding:30px 0;color:var(--muted);text-align:center}
+.toast{
+  position:fixed;right:20px;bottom:20px;z-index:100;
+  background:#222;border:1px solid var(--gold);color:white;
+  padding:15px 18px;border-radius:9px;max-width:350px;
+}
+@media(max-width:850px){
+  .hero{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .grid,.form-grid{grid-template-columns:1fr}
+  .field.full{grid-column:auto}
+  .nav{align-items:flex-start;padding:15px 0;flex-direction:column}
+  .hero{padding:25px 0}
+  .panel{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">BARBEARIA <span>PREMIUM</span></div>
+    <div class="nav-actions">
+      <button class="btn outline small" onclick="showPage('home')">Início</button>
+      <button class="btn small" onclick="showPage('login')">Entrar</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section id="homePage">
+  <div class="hero">
+    <div>
+      <span class="badge">ESTILO • PRECISÃO • EXPERIÊNCIA</span>
+      <h1>Seu estilo começa<br>com um <span>bom corte.</span></h1>
+      <p id="heroDescription">Atendimento personalizado, ambiente confortável e cortes feitos para valorizar o seu estilo.</p>
+      <div class="nav-actions">
+        <button class="btn" onclick="showPage('login')">Agendar horário</button>
+        <button class="btn outline" onclick="scrollToServices()">Ver serviços</button>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div>
+        <div class="symbol">✂</div>
+        <h2 id="heroBarberName">Seu barbeiro de confiança</h2>
+        <p id="heroBarberBio">Cuidado nos detalhes. Resultado no espelho.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="servicesSection">
+    <h2 class="section-title">Menu de <span>cortes e serviços</span></h2>
+    <div id="publicServices" class="grid"></div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Conheça o <span>barbeiro</span></h2>
+    <div class="card profile">
+      <div id="publicAvatar" class="avatar">B</div>
+      <div class="profile-info">
+        <h3 id="publicProfileName">Barbeiro Premium</h3>
+        <p id="publicProfileBio">Perfil profissional da barbearia.</p>
+        <p id="publicProfileContact"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="loginPage" class="hidden">
+  <div class="page-head">
+    <div><h2>Acessar sistema</h2><p>Escolha seu tipo de acesso.</p></div>
+    <button class="btn dark" onclick="showPage('home')">Voltar</button>
+  </div>
+  <div class="panel">
+    <div class="tabs">
+      <button id="clientLoginTab" class="tab active" onclick="setLoginType('cliente')">Cliente</button>
+      <button id="barberLoginTab" class="tab" onclick="setLoginType('barbeiro')">Barbeiro</button>
+    </div>
+    <form id="loginForm" class="form-grid">
+      <div class="field full">
+        <label>Email</label>
+        <input id="loginEmail" type="email" placeholder="Digite seu email" required>
+      </div>
+      <div class="field full">
+        <label>Senha</label>
+        <input id="loginPassword" type="password" placeholder="Digite sua senha" required>
+      </div>
+      <div class="field full">
+        <button class="btn" type="submit">Entrar</button>
+      </div>
+    </form>
+    <p style="color:#aaa;margin-top:18px;font-size:14px">
+      
+    </p>
+  </div>
+</section>
+
+<section id="clientPage" class="hidden">
+  <div class="page-head">
+    <div><h2>Área do cliente</h2><p id="clientWelcome"></p></div>
+    <button class="btn dark" onclick="logout()">Sair</button>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="clientTab('agenda',this)">Agendar</button>
+    <button class="tab" onclick="clientTab('appointments',this)">Meus horários</button>
+    <button class="tab" onclick="clientTab('profile',this)">Meu perfil</button>
+  </div>
+
+  <div id="clientAgendaTab">
+    <div class="panel">
+      <h3 style="color:var(--gold2);margin-bottom:20px">Agende seu atendimento</h3>
+      <form id="appointmentForm" class="form-grid">
+        <div class="field">
+          <label>Serviço</label>
+          <select id="appointmentService" required></select>
+        </div>
+        <div class="field">
+          <label>Data</label>
+          <input id="appointmentDate" type="date" required>
+        </div>
+        <div class="field">
+          <label>Horário</label>
+          <select id="appointmentTime" required></select>
+        </div>
+        <div class="field">
+          <label>Observação</label>
+          <input id="appointmentNote" placeholder="Opcional">
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit">Confirmar agendamento</button>
+        </div>
+      </form>
+    </div>
+    <div class="section">
+      <h3 class="section-title">Serviços disponíveis</h3>
+      <div id="clientServices" class="grid"></div>
+    </div>
+  </div>
+
+  <div id="clientAppointmentsTab" class="hidden">
+    <div class="panel">
+      <h3 style="color:var(--gold2);margin-bottom:18px">Meus agendamentos</h3>
+      <div id="clientAppointments" class="list"></div>
+    </div>
+  </div>
+
+  <div id="clientProfileTab" class="hidden">
+    <div class="panel">
+      <h3 style="color:var(--gold2);margin-bottom:18px">Editar meu perfil</h3>
+      <form id="clientProfileForm" class="form-grid">
+        <div class="field">
+          <label>Nome</label>
+          <input id="clientName" required>
+        </div>
+        <div class="field">
+          <label>Telefone</label>
+          <input id="clientPhone" required>
+        </div>
+        <div class="field full">
+          <label>Email</label>
+          <input id="clientEmail" type="email" required>
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit">Salvar perfil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="barberPage" class="hidden">
+  <div class="page-head">
+    <div><h2>Painel do barbeiro</h2><p>Gerencie sua barbearia e as informações dos clientes.</p></div>
+    <button class="btn dark" onclick="logout()">Sair</button>
+  </div>
+
+  <div class="stat-grid section">
+    <div class="card stat"><span>Agendados</span><strong id="statBooked">0</strong></div>
+    <div class="card stat"><span>Concluídos</span><strong id="statDone">0</strong></div>
+    <div class="card stat"><span>Clientes</span><strong id="statClients">0</strong></div>
+    <div class="card stat"><span>Faturamento</span><strong id="statRevenue">R$ 0</strong></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="barberTab('dashboard',this)">Agenda</button>
+    <button class="tab" onclick="barberTab('profile',this)">Meu perfil</button>
+    <button class="tab" onclick="barberTab('services',this)">Serviços e preços</button>
+    <button class="tab" onclick="barberTab('settings',this)">Configurações</button>
+  </div>
+
+  <div id="barberDashboardTab">
+    <div class="panel">
+      <div class="page-head">
+        <div><h3 style="color:var(--gold2)">Agenda de atendimentos</h3><p>Todos os horários aparecem aqui e também na área do cliente.</p></div>
+        <input id="agendaFilterDate" type="date" style="max-width:190px" onchange="renderBarberAgenda()">
+      </div>
+      <div id="barberAppointments" class="list"></div>
+    </div>
+  </div>
+
+  <div id="barberProfileTab" class="hidden">
+    <div class="panel">
+      <h3 style="color:var(--gold2);margin-bottom:18px">Perfil público do barbeiro</h3>
+      <div class="notice">As alterações abaixo aparecem automaticamente na página inicial e na área do cliente.</div>
+      <form id="barberProfileForm" class="form-grid">
+        <div class="field">
+          <label>Nome do barbeiro</label>
+          <input id="barberName" required>
+        </div>
+        <div class="field">
+          <label>Telefone / WhatsApp</label>
+          <input id="barberPhone" required>
+        </div>
+        <div class="field full">
+          <label>Instagram</label>
+          <input id="barberInstagram" placeholder="https://www.instagram.com/barbearia_premium23/">
+        </div>
+        <div class="field full">
+          <label>Descrição profissional</label>
+          <textarea id="barberBio" required></textarea>
+        </div>
+        <div class="field full">
+          <label>URL da foto do barbeiro</label>
+          <input id="barberPhoto" placeholder="https://...">
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit">Salvar perfil público</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="barberServicesTab" class="hidden">
+    <div class="panel">
+      <h3 style="color:var(--gold2);margin-bottom:18px">Gerenciar menu e preços</h3>
+      <div class="notice">O preço salvo aqui é o mesmo mostrado no menu público, na área do cliente e nos agendamentos.</div>
+      <form id="serviceForm" class="form-grid">
+        <input type="hidden" id="serviceId">
+        <div class="field">
+          <label>Nome do serviço</label>
+          <input id="serviceName" required placeholder="Ex.: Corte degradê">
+        </div>
+        <div class="field">
+          <label>Preço em reais</label>
+          <input id="servicePrice" type="number" min="0" step="0.01" required placeholder="35.00">
+        </div>
+        <div class="field">
+          <label>Duração em minutos</label>
+          <input id="serviceDuration" type="number" min="5" step="5" required value="40">
+        </div>
+        <div class="field">
+          <label>Descrição</label>
+          <input id="serviceDescription" placeholder="Descrição do serviço">
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit">Salvar serviço</button>
+          <button class="btn dark hidden" id="cancelEditService" type="button" onclick="resetServiceForm()">Cancelar edição</button>
+        </div>
+      </form>
+      <hr style="border-color:#333;margin:25px 0">
+      <div id="barberServices" class="list"></div>
+    </div>
+  </div>
+
+  <div id="barberSettingsTab" class="hidden">
+    <div class="panel">
+      <h3 style="color:var(--gold2);margin-bottom:18px">Horários de atendimento</h3>
+      <div class="notice">Esses horários controlam as opções exibidas para o cliente no agendamento.</div>
+      <form id="settingsForm" class="form-grid">
+        <div class="field">
+          <label>Início do atendimento</label>
+          <input id="openingTime" type="time" required>
+        </div>
+        <div class="field">
+          <label>Fim do atendimento</label>
+          <input id="closingTime" type="time" required>
+        </div>
+        <div class="field">
+          <label>Intervalo entre horários</label>
+          <select id="slotInterval">
+            <option value="15">15 minutos</option>
+            <option value="30">30 minutos</option>
+            <option value="45">45 minutos</option>
+            <option value="60">60 minutos</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Dias de atendimento</label>
+          <input id="workingDays" placeholder="Ex.: Segunda a sábado">
+        </div>
+        <div class="field full">
+          <button class="btn" type="submit">Salvar configurações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© <span id="year"></span> Barbearia Premium.</p>
+    <p style="margin-top:8px">WhatsApp: <a href="https://wa.me/5511983928987" target="_blank">11 98392-8987</a> ·
+    Instagram: <a href="https://www.instagram.com/barbearia_premium23/" target="_blank">@barbearia_premium23</a></p>
+  </div>
+</footer>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+const STORAGE_KEY = "barbearia_premium_sistema_v1";
+
+const defaultData = {
+  barber:{
+    id:"barber-1",
+    name:"John Dimitry",
+    phone:"11 98392-8987",
+    instagram:"https://www.instagram.com/barbearia_premium23/",
+    bio:"Barbeiro especializado em cortes modernos, acabamento preciso e atendimento personalizado.",
+    photo:"",
+  },
+  settings:{
+    opening:"09:00",
+    closing:"19:00",
+    interval:30,
+    workingDays:"Segunda a sábado"
+  },
+  users:[
+    {id:"client",role:"cliente",name:"John Doe",email:"john@gmail.com",password:"1234",phone:"11999999999"},
+    {id:"barber-1",role:"barbeiro",name:"John Dimitry",email:"dimi@gmail.com",password:"1234",phone:"11983928987"}
+  ],
+  services:[
+    {id:"s1",name:"Corte tradicional",price:35,duration:30,description:"Corte clássico com acabamento preciso."},
+    {id:"s2",name:"Corte degradê",price:45,duration:45,description:"Degradê moderno com acabamento detalhado."},
+    {id:"s3",name:"Corte + barba",price:65,duration:60,description:"Corte completo acompanhado de barba."},
+    {id:"s4",name:"Barba",price:30,duration:30,description:"Modelagem e acabamento da barba."},
+    {id:"s5",name:"Sobrancelha",price:15,duration:15,description:"Design e limpeza de sobrancelhas."},
+    {id:"s6",name:"Platinado",price:120,duration:120,description:"Processo de descoloração e acabamento."}
+  ],
+  appointments:[]
+};
+
+let data = loadData();
+let currentUser = null;
+let loginType = "cliente";
+
+function loadData(){
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if(!saved) return structuredClone(defaultData);
+  try{
+    const parsed = JSON.parse(saved);
+    return {
+      ...structuredClone(defaultData),
+      ...parsed,
+      barber:{...defaultData.barber,...parsed.barber},
+      settings:{...defaultData.settings,...parsed.settings},
+      users:parsed.users || defaultData.users,
+      services:parsed.services || defaultData.services,
+      appointments:parsed.appointments || []
+    };
+  }catch(e){return structuredClone(defaultData)}
+}
+function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
+function money(value){return Number(value).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function toast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;el.classList.remove("hidden");
+  setTimeout(()=>el.classList.add("hidden"),3000);
+}
+function showPage(page){
+  ["homePage","loginPage","clientPage","barberPage"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  document.getElementById(page+"Page").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(page==="home") renderPublic();
+  if(page==="client") renderClient();
+  if(page==="barber") renderBarber();
+}
+function scrollToServices(){
+  document.getElementById("servicesSection").scrollIntoView({behavior:"smooth"});
+}
+function setLoginType(type){
+  loginType=type;
+  document.getElementById("clientLoginTab").classList.toggle("active",type==="cliente");
+  document.getElementById("barberLoginTab").classList.toggle("active",type==="barbeiro");
+}
+document.getElementById("loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const email=document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password=document.getElementById("loginPassword").value;
+  const user=data.users.find(u=>u.email.toLowerCase()===email&&u.password===password&&u.role===loginType);
+  if(!user){toast("Email, senha ou tipo de acesso inválido.");return}
+  currentUser={...user};
+  showPage(user.role==="cliente"?"client":"barber");
+  toast("Login realizado com sucesso.");
+});
+function logout(){currentUser=null;showPage("home");toast("Você saiu do sistema.")}
+function renderPublic(){
+  document.getElementById("heroDescription").textContent=
+    "Atendimento personalizado, ambiente confortável e cortes feitos para valorizar o seu estilo.";
+  document.getElementById("heroBarberName").textContent=data.barber.name;
+  document.getElementById("heroBarberBio").textContent=data.barber.bio;
+  document.getElementById("publicProfileName").textContent=data.barber.name;
+  document.getElementById("publicProfileBio").textContent=data.barber.bio;
+  document.getElementById("publicProfileContact").innerHTML=
+    `WhatsApp: ${escapeHTML(data.barber.phone)} · ${data.barber.instagram?`<a href="${escapeHTML(data.barber.instagram)}" target="_blank">Instagram</a>`:""}`;
+  const avatar=document.getElementById("publicAvatar");
+  if(data.barber.photo){
+    avatar.innerHTML=`<img src="${escapeHTML(data.barber.photo)}" alt="Foto do barbeiro" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`;
+  }else avatar.textContent=data.barber.name.charAt(0).toUpperCase();
+  const html=data.services.map(serviceCard).join("");
+  document.getElementById("publicServices").innerHTML=html||'<div class="empty">Nenhum serviço cadastrado.</div>';
+}
+function serviceCard(s){
+  return `<div class="card">
+    <span class="badge">${escapeHTML(s.duration)} min</span>
+    <h3>${escapeHTML(s.name)}</h3>
+    <p>${escapeHTML(s.description||"Serviço profissional da barbearia.")}</p>
+    <div class="price">${money(s.price)}</div>
+    <button class="btn small" onclick="showPage('login')">Agendar</button>
+  </div>`;
+}
+function renderClient(){
+  document.getElementById("clientWelcome").textContent=`Olá, ${currentUser.name}! Escolha um serviço e reserve seu horário.`;
+  document.getElementById("clientName").value=currentUser.name||"";
+  document.getElementById("clientPhone").value=currentUser.phone||"";
+  document.getElementById("clientEmail").value=currentUser.email||"";
+  document.getElementById("clientServices").innerHTML=data.services.map(serviceCard).join("");
+  const select=document.getElementById("appointmentService");
+  select.innerHTML=data.services.map(s=>`<option value="${s.id}">${escapeHTML(s.name)} — ${money(s.price)}</option>`).join("");
+  document.getElementById("appointmentDate").min=new Date().toISOString().split("T")[0];
+  renderTimeOptions();
+  renderClientAppointments();
+}
+function clientTab(tab,button){
+  ["clientAgendaTab","clientAppointmentsTab","clientProfileTab"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  document.getElementById("client"+tab.charAt(0).toUpperCase()+tab.slice(1)+"Tab").classList.remove("hidden");
+  document.querySelectorAll("#clientPage .tabs .tab").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  if(tab==="appointments")renderClientAppointments();
+}
+function timeToMinutes(time){const [h,m]=time.split(":").map(Number);return h*60+m}
+function minutesToTime(minutes){return String(Math.floor(minutes/60)).padStart(2,"0")+":"+String(minutes%60).padStart(2,"0")}
+function renderTimeOptions(){
+  const select=document.getElementById("appointmentTime");
+  const start=timeToMinutes(data.settings.opening);
+  const end=timeToMinutes(data.settings.closing);
+  const interval=Number(data.settings.interval)||30;
+  const date=document.getElementById("appointmentDate").value;
+  let options=[];
+  for(let t=start;t<end;t+=interval){
+    const time=minutesToTime(t);
+    const occupied=data.appointments.some(a=>a.date===date&&a.time===time&&a.status==="agendado");
+    options.push(`<option value="${time}" ${occupied?"disabled":""}>${time}${occupied?" — ocupado":""}</option>`);
+  }
+  select.innerHTML=options.join("")||'<option value="">Sem horários disponíveis</option>';
+}
+document.getElementById("appointmentDate").addEventListener("change",renderTimeOptions);
+document.getElementById("appointmentForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const service=data.services.find(s=>s.id===document.getElementById("appointmentService").value);
+  const date=document.getElementById("appointmentDate").value;
+  const time=document.getElementById("appointmentTime").value;
+  if(!service||!date||!time){toast("Preencha os dados do agendamento.");return}
+  const exists=data.appointments.some(a=>a.date===date&&a.time===time&&a.status==="agendado");
+  if(exists){toast("Esse horário acabou de ser ocupado.");renderTimeOptions();return}
+  data.appointments.push({
+    id:"a-"+Date.now(),
+    clientId:currentUser.id,
+    clientName:currentUser.name,
+    clientPhone:currentUser.phone,
+    serviceId:service.id,
+    serviceName:service.name,
+    price:service.price,
+    duration:service.duration,
+    date,time,
+    note:document.getElementById("appointmentNote").value,
+    status:"agendado",
+    createdAt:new Date().toISOString()
+  });
+  saveData();
+  e.target.reset();
+  renderTimeOptions();
+  renderClientAppointments();
+  toast("Agendamento confirmado!");
+});
+function renderClientAppointments(){
+  const mine=data.appointments.filter(a=>a.clientId===currentUser.id).sort(sortAppointments);
+  const el=document.getElementById("clientAppointments");
+  if(!mine.length){el.innerHTML='<div class="empty">Você ainda não possui agendamentos.</div>';return}
+  el.innerHTML=mine.map(a=>appointmentHTML(a,"client")).join("");
+}
+function sortAppointments(a,b){return (a.date+a.time).localeCompare(b.date+b.time)}
+function appointmentHTML(a,mode){
+  return `<div class="item">
+    <div class="item-main">
+      <strong>${escapeHTML(a.serviceName)} — ${money(a.price)}</strong>
+      <span>${mode==="barber"?`Cliente: ${escapeHTML(a.clientName)}<br>Telefone: ${escapeHTML(a.clientPhone)}<br>`:""}Data: ${escapeHTML(a.date.split("-").reverse().join("/"))} às ${escapeHTML(a.time)}<br>Duração: ${escapeHTML(a.duration)} minutos${a.note?`<br>Observação: ${escapeHTML(a.note)}`:""}</span>
+    </div>
+    <div class="item-actions">
+      <span class="status ${a.status}">${a.status}</span>
+      ${mode==="client"&&a.status==="agendado"?`<button class="btn danger small" onclick="cancelAppointment('${a.id}')">Cancelar</button>`:""}
+      ${mode==="barber"&&a.status==="agendado"?`
+        <button class="btn success small" onclick="changeAppointmentStatus('${a.id}','concluido')">Concluir</button>
+        <button class="btn danger small" onclick="changeAppointmentStatus('${a.id}','cancelado')">Cancelar</button>`:""}
+    </div>
+  </div>`;
+}
+function cancelAppointment(id){
+  const a=data.appointments.find(x=>x.id===id);
+  if(!a)return;
+  a.status="cancelado";saveData();renderClientAppointments();renderTimeOptions();toast("Agendamento cancelado.");
+}
+function renderBarber(){
+  document.getElementById("agendaFilterDate").value="";
+  fillBarberForms();
+  renderBarberStats();
+  renderBarberAgenda();
+  renderBarberServices();
+}
+function barberTab(tab,button){
+  ["barberDashboardTab","barberProfileTab","barberServicesTab","barberSettingsTab"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+  document.getElementById("barber"+tab.charAt(0).toUpperCase()+tab.slice(1)+"Tab").classList.remove("hidden");
+  document.querySelectorAll("#barberPage .tabs .tab").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+}
+function fillBarberForms(){
+  document.getElementById("barberName").value=data.barber.name;
+  document.getElementById("barberPhone").value=data.barber.phone;
+  document.getElementById("barberInstagram").value=data.barber.instagram;
+  document.getElementById("barberBio").value=data.barber.bio;
+  document.getElementById("barberPhoto").value=data.barber.photo;
+  document.getElementById("openingTime").value=data.settings.opening;
+  document.getElementById("closingTime").value=data.settings.closing;
+  document.getElementById("slotInterval").value=data.settings.interval;
+  document.getElementById("workingDays").value=data.settings.workingDays;
+}
+function renderBarberStats(){
+  const booked=data.appointments.filter(a=>a.status==="agendado");
+  const done=data.appointments.filter(a=>a.status==="concluido");
+  const clients=new Set(data.appointments.map(a=>a.clientId));
+  const revenue=done.reduce((sum,a)=>sum+Number(a.price||0),0);
+  document.getElementById("statBooked").textContent=booked.length;
+  document.getElementById("statDone").textContent=done.length;
+  document.getElementById("statClients").textContent=clients.size;
+  document.getElementById("statRevenue").textContent=money(revenue);
+}
+function renderBarberAgenda(){
+  const filter=document.getElementById("agendaFilterDate").value;
+  let list=data.appointments.filter(a=>!filter||a.date===filter).sort(sortAppointments);
+  const el=document.getElementById("barberAppointments");
+  if(!list.length){el.innerHTML='<div class="empty">Nenhum atendimento encontrado.</div>';return}
+  el.innerHTML=list.map(a=>appointmentHTML(a,"barber")).join("");
+}
+function changeAppointmentStatus(id,status){
+  const a=data.appointments.find(x=>x.id===id);
+  if(!a)return;
+  a.status=status;saveData();renderBarberStats();renderBarberAgenda();toast("Status atualizado.");
+}
+document.getElementById("barberProfileForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  data.barber.name=document.getElementById("barberName").value.trim();
+  data.barber.phone=document.getElementById("barberPhone").value.trim();
+  data.barber.instagram=document.getElementById("barberInstagram").value.trim();
+  data.barber.bio=document.getElementById("barberBio").value.trim();
+  data.barber.photo=document.getElementById("barberPhoto").value.trim();
+  const user=data.users.find(u=>u.id==="barber-1");
+  if(user){user.name=data.barber.name;user.phone=data.barber.phone}
+  saveData();renderPublic();toast("Perfil público atualizado.");
+});
+document.getElementById("serviceForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id=document.getElementById("serviceId").value;
+  const service={
+    id:id||"s-"+Date.now(),
+    name:document.getElementById("serviceName").value.trim(),
+    price:Number(document.getElementById("servicePrice").value),
+    duration:Number(document.getElementById("serviceDuration").value),
+    description:document.getElementById("serviceDescription").value.trim()
+  };
+  if(id){
+    const index=data.services.findIndex(s=>s.id===id);
+    if(index>=0)data.services[index]=service;
+  }else data.services.push(service);
+  saveData();resetServiceForm();renderBarberServices();renderPublic();renderClient();toast("Serviço e preço atualizados.");
+});
+function renderBarberServices(){
+  const el=document.getElementById("barberServices");
+  if(!data.services.length){el.innerHTML='<div class="empty">Nenhum serviço cadastrado.</div>';return}
+  el.innerHTML=data.services.map(s=>`<div class="item">
+    <div class="item-main"><strong>${escapeHTML(s.name)} — ${money(s.price)}</strong>
+    <span>${escapeHTML(s.duration)} minutos<br>${escapeHTML(s.description||"Sem descrição")}</span></div>
+    <div class="item-actions">
+      <button class="btn small" onclick="editService('${s.id}')">Editar</button>
+      <button class="btn danger small" onclick="deleteService('${s.id}')">Excluir</button>
+    </div>
+  </div>`).join("");
+}
+function editService(id){
+  const s=data.services.find(x=>x.id===id);if(!s)return;
+  document.getElementById("serviceId").value=s.id;
+  document.getElementById("serviceName").value=s.name;
+  document.getElementById("servicePrice").value=s.price;
+  document.getElementById("serviceDuration").value=s.duration;
+  document.getElementById("serviceDescription").value=s.description;
+  document.getElementById("cancelEditService").classList.remove("hidden");
+}
+function resetServiceForm(){
+  document.getElementById("serviceForm").reset();
+  document.getElementById("serviceId").value="";
+  document.getElementById("serviceDuration").value=40;
+  document.getElementById("cancelEditService").classList.add("hidden");
+}
+function deleteService(id){
+  if(data.appointments.some(a=>a.serviceId===id&&a.status==="agendado")){
+    toast("Não exclua um serviço com agendamentos ativos.");return;
+  }
+  if(!confirm("Deseja realmente excluir este serviço?"))return;
+  data.services=data.services.filter(s=>s.id!==id);
+  saveData();renderBarberServices();renderPublic();renderClient();toast("Serviço excluído.");
+}
+document.getElementById("settingsForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const opening=document.getElementById("openingTime").value;
+  const closing=document.getElementById("closingTime").value;
+  if(timeToMinutes(opening)>=timeToMinutes(closing)){toast("O horário final deve ser depois do inicial.");return}
+  data.settings.opening=opening;
+  data.settings.closing=closing;
+  data.settings.interval=Number(document.getElementById("slotInterval").value);
+  data.settings.workingDays=document.getElementById("workingDays").value.trim();
+  saveData();renderTimeOptions();toast("Horários de atendimento atualizados.");
+});
+document.getElementById("clientProfileForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  currentUser.name=document.getElementById("clientName").value.trim();
+  currentUser.phone=document.getElementById("clientPhone").value.trim();
+  currentUser.email=document.getElementById("clientEmail").value.trim().toLowerCase();
+  const user=data.users.find(u=>u.id===currentUser.id);
+  if(user){user.name=currentUser.name;user.phone=currentUser.phone;user.email=currentUser.email}
+  data.appointments.filter(a=>a.clientId===currentUser.id).forEach(a=>{
+    a.clientName=currentUser.name;a.clientPhone=currentUser.phone;
+  });
+  saveData();renderClient();toast("Perfil atualizado.");
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+renderPublic();
+</script>
+</body>
+</html>
